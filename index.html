@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarjetas Interactivas</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+    <div class="formulario-container">
+        <h1>Crea tu Tarjeta Interactiva</h1>
+        <form id="tarjeta-form">
+            <label for="nombre">Nombre de la Persona:</label>
+            <input type="text" id="nombre" name="nombre" required>
+            <label for="evento">Evento:</label>
+            <select id="evento" name="evento" required>
+                <option value="cumpleaños">Cumpleaños</option>
+                <option value="matrimonio">Matrimonio</option>
+                <option value="funeral">Funeral</option>
+                <option value="nacimiento">Nacimiento</option>
+                <option value="graduacion">Graduación</option>
+                <option value="ascenso">Ascenso</option>
+                <option value="despido">Despido</option>
+            </select>
+            <button type="submit">Crear Tarjeta</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

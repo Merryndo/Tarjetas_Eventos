@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graduacion</title>
+    <link rel="stylesheet" href="estilo.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url(../graduacion/graduation-995042_1280.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .tarjeta-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1500px;
+        }
+
+        .tarjeta {
+            width: 600px;
+            height: 900px;
+            border: 5px solid #2b832b;
+            border-radius: 15px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+            cursor: pointer;
+        }
+
+        .tarjeta .exterior,
+        .tarjeta .interior {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tarjeta .exterior {
+            background: linear-gradient(135deg, #50C878, #1F4E79);
+            color: #070707;
+            font-size: 90px;
+            font-weight: bold;
+            text-align: center;
+            font-family: "Montserrat";
+        }
+
+        .tarjeta .interior {
+            background: linear-gradient(135deg, #50C878, #1F4E79);
+            transform: rotateY(180deg);
+            color: #070707;
+            font-size: 45px;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: "Montserrat";
+        }
+
+        .tarjeta.abierta {
+            transform: rotateY(-180deg);
+        }
+
+        @keyframes moveAndFade {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px);
+            }
+        }
+
+        .card-animation {
+            animation: moveAndFade 3s ease-out forwards;
+        }
+
+        #fireworks-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="fireworks-container"></div>
+    <div class="tarjeta-container">
+        <div class="tarjeta" onclick="abrirTarjeta()">
+            <div class="exterior">¡Felicidades!</div>
+            <div class="interior">
+                <p><span id="nombre-persona"></span>, este es solo el comienzo de un increíble viaje lleno de logros y nuevas oportunidades. 
+                    Estamos increíblemente orgullosos de todo lo que has alcanzado y emocionados por todo lo que el futuro te depara.
+                    ¡Sigue brillando y alcanzando nuevas alturas!</p>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/fireworks-js/dist/fireworks.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const params = new URLSearchParams(window.location.search);
+            const nombre = params.get("nombre");
+            document.getElementById("nombre-persona").textContent = nombre;
+        });
+
+        function abrirTarjeta() {
+            document.querySelector(".tarjeta").classList.toggle('abierta');
+
+            // Inicializar y configurar fuegos artificiales
+            const container = document.getElementById('fireworks-container');
+            const fireworks = new Fireworks(container, {
+                speed: 2,
+                particles: 150,
+                trace: 3,
+                explosion: 5,
+                boundaries: {
+                    top: 0,
+                    bottom: container.clientHeight,
+                    left: 0,
+                    right: container.clientWidth
+                },
+                sound: {
+                    enabled: true,
+                    files: [
+                        'https://cdn.jsdelivr.net/gh/crashmax-dev/fireworks-js/sounds/explosion0.mp3',
+                        'https://cdn.jsdelivr.net/gh/crashmax-dev/fireworks-js/sounds/explosion1.mp3'
+                    ]
+                }
+            });
+
+            fireworks.start();
+
+        }
+    </script>
+</body>
+
+</html>

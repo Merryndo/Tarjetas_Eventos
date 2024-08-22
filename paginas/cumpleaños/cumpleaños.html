@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Cumpleaños</title>
+    <link rel="stylesheet" href="estilo.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url(../cumpleaños/balloons-1869790_1280.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            /* Para que la imagen de fondo se mantenga fija al hacer scroll */
+        }
+
+        .tarjeta-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1500px;
+            /* Para mejorar el efecto de apertura */
+        }
+
+        .tarjeta {
+            width: 600px;
+            height: 900px;
+            background-color: #fff;
+            border: 5px solid #ff69b4;
+            /* Borde colorido */
+            border-radius: 15px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+            cursor: pointer;
+        }
+
+        .tarjeta .exterior,
+        .tarjeta .interior {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tarjeta .exterior {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            /* Gradiente diagonal de rosa oscuro a rosa claro */
+            color: #fff;
+            font-size: 90px;
+            font-weight: bold;
+            text-align: center;
+            font-family: "Bebas Neue", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .tarjeta .interior {
+            background-color: #fffaf0;
+            transform: rotateY(180deg);
+            color: #333;
+            font-size: 50px;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Alinea todos los elementos en el centro horizontalmente */
+            justify-content: center;
+            /* Alinea todos los elementos en el centro verticalmente si hay espacio adicional */
+            box-sizing: border-box;
+            text-align: center;
+            font-family: "Bebas Neue", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+
+        }
+
+        .tarjeta.abierta {
+            transform: rotateY(-180deg);
+        }
+
+        .tarta {
+            margin-top: 20px;
+            width: 100%;
+            /* Ajusta el tamaño si es necesario */
+            height: 100%;
+            position: relative;
+        }
+
+        .tarta .base {
+            width: 100%;
+            height: 100px;
+            background-color: pink;
+            border-radius: 0 0 10px 10px;
+            position: relative;
+        }
+
+        .tarta .top {
+            width: 80%;
+            height: 40px;
+            background-color: lightcoral;
+            margin: 0 auto;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .tarta .velas {
+            display: flex;
+            justify-content: space-around;
+            position: absolute;
+            top: -10px;
+            left: 15%;
+            width: 70%;
+        }
+
+        .vela {
+            width: 10px;
+            height: 30px;
+            background-color: #4c5ce9;
+            position: relative;
+        }
+
+        .llama {
+            width: 10px;
+            height: 10px;
+            background-color: orange;
+            border-radius: 50%;
+            position: absolute;
+            top: -15px;
+            left: 0;
+            animation: parpadeo 1s infinite alternate;
+        }
+
+        @keyframes parpadeo {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 0.6;
+                transform: scale(1.2);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tarjeta-container">
+        <div class="tarjeta" onclick="abrirTarjeta()">
+            <div class="exterior">¡Feliz Cumpleaños!</div>
+            <div class="interior">
+                <div>
+                    <p>Felicidades, <span id="nombre-persona"></span>!</p>
+                    <div class="tarta">
+                        <div class="top"></div>
+                        <div class="base"></div>
+                        <div class="velas">
+                            <div class="vela">
+                                <div class="llama"></div>
+                            </div>
+                            <div class="vela">
+                                <div class="llama"></div>
+                            </div>
+                            <div class="vela">
+                                <div class="llama"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const params = new URLSearchParams(window.location.search);
+            const nombre = params.get("nombre");
+            document.getElementById("nombre-persona").textContent = nombre;
+        });
+
+        function abrirTarjeta() {
+            document.querySelector(".tarjeta").classList.toggle('abierta');
+
+            // Lanzar confeti al abrir la tarjeta
+            confetti({
+                particleCount: 150,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ['#ff1493', '#00bfff', '#32cd32', '#ff4500', '#ffff00']
+            });
+        }
+    </script>
+</body>
+
+</html>

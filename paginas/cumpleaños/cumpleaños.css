@@ -1,0 +1,31 @@
+.confeti {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    position: absolute;
+    animation: caer 5s linear infinite;
+}
+
+.confeti:nth-child(2n) {
+    background-color: yellow;
+}
+.confeti:nth-child(3n) {
+    background-color: blue;
+}
+.confeti:nth-child(4n) {
+    background-color: green;
+}
+
+@keyframes caer {
+    0% {
+        transform: translateY(-100px);
+    }
+    100% {
+        transform: translateY(100vh);
+    }
+}
+.tarta{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}

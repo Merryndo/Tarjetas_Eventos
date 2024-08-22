@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casamiento</title>
+    <link rel="stylesheet" href="estilo.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url(../matrimonio/wedding-1146324_1280.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            overflow: hidden;
+        }
+
+        .tarjeta-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1500px;
+        }
+
+        .tarjeta {
+            width: 600px;
+            height: 900px;
+            background-color: #ffffff;
+            border: 5px solid #8f8b8d;
+            border-radius: 15px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+            cursor: pointer;
+        }
+
+        .tarjeta .exterior,
+        .tarjeta .interior {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tarjeta .exterior {
+            background: linear-gradient(135deg, #f4c6c6, #f8e8d6);
+            color: #333;
+            font-size: 90px;
+            font-weight: bold;
+            text-align: center;
+            font-family: "Playfair Display", serif;
+        }
+
+        .tarjeta .interior {
+            background: #fff;
+            transform: rotateY(180deg);
+            color: #333;
+            font-size: 45px;
+            font-family: "Playfair Display", serif;
+            text-align: center;
+        }
+
+        .tarjeta.abierta {
+            transform: rotateY(-180deg);
+        }
+
+        #hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+
+        .heart {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #ff6f61;
+            transform: rotate(45deg);
+            animation: float 7s ease-in infinite;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #ff6f61;
+            border-radius: 50%;
+        }
+
+        .heart:before {
+            top: -15px;
+            left: 0;
+        }
+
+        .heart:after {
+            left: 15px;
+            top: 0;
+        }
+
+        .heart:nth-child(odd) {
+            animation-duration: 5s;
+        }
+
+        .heart:nth-child(even) {
+            animation-duration: 9s;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="hearts"></div>
+    <div class="tarjeta-container">
+        <div class="tarjeta" onclick="abrirTarjeta()">
+            <div class="exterior">¡Viva el amor!</div>
+            <div class="interior">
+                <div>
+                    <p>Felicidades, <span id="nombre-persona"></span>, por tu enlace!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const params = new URLSearchParams(window.location.search);
+            const nombre = params.get("nombre");
+            document.getElementById("nombre-persona").textContent = nombre;
+
+            // Generar corazones
+            const heartsContainer = document.getElementById('hearts');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                heartsContainer.appendChild(heart);
+            }
+        });
+
+        function abrirTarjeta() {
+            document.querySelector(".tarjeta").classList.toggle('abierta');
+        }
+    </script>
+</body>
+
+</html>
